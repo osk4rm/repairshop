@@ -26,6 +26,8 @@ public class Vehicle extends BaseEntity {
 
     int engineCapacity;
 
+    String plateNumbers;
+
     Long ownerId;
 
 
