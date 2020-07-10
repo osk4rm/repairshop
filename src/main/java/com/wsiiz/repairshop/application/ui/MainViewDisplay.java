@@ -14,6 +14,7 @@ public class MainViewDisplay extends Panel implements ViewDisplay {
         setStyleName(ValoTheme.PANEL_BORDERLESS);
     }
 
+
     @Override
     public void showView(View view) {
         setContent((Component) view);

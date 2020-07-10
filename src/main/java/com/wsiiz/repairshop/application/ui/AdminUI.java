@@ -4,6 +4,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringNavigator;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
@@ -38,7 +39,12 @@ public class AdminUI extends UI implements I18nAware {
 
   private Component createNavigationBar() {
     MVerticalLayout m = new MVerticalLayout().withWidth("150px").withStyleName("main-menu");
+    Button buttonLogout = new Button("LOGOUT");
+    buttonLogout.addClickListener(event -> getUI().getPage().setLocation("logout"));
+
     m.addComponent(createNavButton(i18n("employee"), "employee"));
+    m.addComponent(buttonLogout);
+    m.setComponentAlignment(buttonLogout, Alignment.BOTTOM_LEFT);
     return m;
   }
 

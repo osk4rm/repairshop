@@ -35,11 +35,12 @@ public class MainUI extends UI implements I18nAware {
         buttonEmployee.addClickListener(event -> getUI().getPage().setLocation("employee-panel"));
 
         setContent(
-                new MHorizontalLayout()
+                new MVerticalLayout()
                         .add(buttonAdmin, buttonEmployee)
 
         );
     }
+
 
 
 }
