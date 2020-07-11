@@ -23,6 +23,6 @@ public class Company extends Customer {
 
     @Override
     public String fullName() {
-        return null;
+        return name;
     }
 }

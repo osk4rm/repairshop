@@ -24,7 +24,7 @@ public class Vehicle extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     FuelType fuelType;
 
-    int engineCapacity;
+    String engineCapacity;
 
     String plateNumbers;
 
