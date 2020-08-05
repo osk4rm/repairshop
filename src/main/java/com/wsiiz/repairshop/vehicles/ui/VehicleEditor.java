@@ -43,8 +43,10 @@ public class VehicleEditor extends BaseEditor<Vehicle> {
 
         Design.read("VehicleEditor.html", this);
 
+        brand.setItems(Brand.values());
         fuelType.setItems(FuelType.values());
         ownerId.setItems(vehicleService.getCustomersList().stream().map(Customer::getId).collect(Collectors.toList()));
+        ownerId.setItemCaptionGenerator(e -> e + ": " + vehicleService.getCustomerName(e));
 
         setSaveCaption(i18n("save"));
         setModalWindowTitle(i18n("title"));

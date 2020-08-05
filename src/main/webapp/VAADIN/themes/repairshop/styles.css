@@ -15495,7 +15495,7 @@ div.v-layout.v-horizontal.v-widget {
 }
 
 .repairshop .v-button-main-menu-option-service {
-	background-image: url("./img/car.png");
+	background-image: url("./img/repair.png");
 }
 
 .repairshop .v-button-main-menu-option-customer {
@@ -15504,4 +15504,8 @@ div.v-layout.v-horizontal.v-widget {
 
 .repairshop .v-button-main-menu-option-employee {
 	background-image: url("./img/employee.png");
+}
+
+.repairshop .v-button-main-menu-option-vehicle {
+	background-image: url("./img/car.png");
 }

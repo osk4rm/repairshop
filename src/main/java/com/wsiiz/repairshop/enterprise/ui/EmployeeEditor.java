@@ -40,6 +40,7 @@ public class EmployeeEditor extends BaseEditor<Employee> {
         skillType.setItemCaptionGenerator(e -> i18n(SkillType.class, e.name()));
 
         branchId.setItems(employeeService.findBranches().stream().map(Branch::getId).collect(Collectors.toList()));
+
         branchId.setItemCaptionGenerator(e -> employeeService.findBranchName(e));
 
         setCaptions();
