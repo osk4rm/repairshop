@@ -11,4 +11,5 @@ public interface ServiceRequestRepository extends JpaRepository<ServiceRequest, 
       + "and (:requestType = null or sr.requestType = :requestType)")
   List<ServiceRequest> findBySelectionCriteria(@Param("vehicleId") Long vehicleId,
       @Param("requestType") RequestType requestType);
+
 }

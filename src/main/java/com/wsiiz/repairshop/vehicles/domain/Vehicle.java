@@ -30,5 +30,8 @@ public class Vehicle extends BaseEntity {
 
     Long ownerId;
 
-
+    @Override
+    public String toString() {
+        return id + " | " + brand + " " + model + " | " + "PLATE NO: " + plateNumbers;
+    }
 }
