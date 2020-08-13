@@ -99,7 +99,7 @@ public abstract class BaseView<E extends BaseEntity> extends VerticalLayout impl
     return table;
   }
 
-  private void editInPopup(E entity) {
+  protected void editInPopup(E entity) {
     editor.setEntity(entity);
     editor.openInModalPopup();
   }

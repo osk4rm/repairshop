@@ -13,7 +13,7 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.stream.Collectors;
 
-public class ServiceEditor extends AbstractForm<ServiceRequest> implements I18nAware {
+public class ServiceRequestEditor extends AbstractForm<ServiceRequest> implements I18nAware {
 
     ServiceRequestService service;
 
@@ -22,7 +22,7 @@ public class ServiceEditor extends AbstractForm<ServiceRequest> implements I18nA
     private TextArea description = new TextArea(i18n("description"));
     private DateTimeField registrationTime = new DateTimeField(i18n("registrationTime"));
 
-    public ServiceEditor(ServiceRequestService service) {
+    public ServiceRequestEditor(ServiceRequestService service) {
       super(ServiceRequest.class);
       this.service = service;
     }

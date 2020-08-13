@@ -10,7 +10,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.wsiiz.repairshop.enterprise.ui.EmployeeView;
 import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
-import com.wsiiz.repairshop.servicing.ui.service.ServiceView;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 

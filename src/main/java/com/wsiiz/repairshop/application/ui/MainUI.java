@@ -1,17 +1,12 @@
 package com.wsiiz.repairshop.application.ui;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
-import com.wsiiz.repairshop.foundation.ui.BaseView;
 import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
-import com.wsiiz.repairshop.servicing.domain.service.Service;
-import com.wsiiz.repairshop.servicing.ui.service.ServiceView;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
+import com.wsiiz.repairshop.servicing.ui.service.ServiceRequestView;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 @SpringUI
@@ -22,7 +17,7 @@ public class MainUI extends UI implements I18nAware {
 
     public MainUI(MainViewDisplay mainContent, SpringNavigator navigator) {
         this.mainContent = mainContent;
-        navigator.setErrorView(ServiceView.class);
+        navigator.setErrorView(ServiceRequestView.class);
     }
 
     @Override
