@@ -6,7 +6,7 @@ import com.vaadin.spring.annotation.SpringUI;
 import com.vaadin.spring.navigator.SpringNavigator;
 import com.vaadin.ui.*;
 import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
-import com.wsiiz.repairshop.servicing.ui.service.ServiceRequestView;
+import com.wsiiz.repairshop.servicing.ui.service.ServiceView;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 @SpringUI
@@ -17,7 +17,7 @@ public class MainUI extends UI implements I18nAware {
 
     public MainUI(MainViewDisplay mainContent, SpringNavigator navigator) {
         this.mainContent = mainContent;
-        navigator.setErrorView(ServiceRequestView.class);
+        navigator.setErrorView(ServiceView.class);
     }
 
     @Override

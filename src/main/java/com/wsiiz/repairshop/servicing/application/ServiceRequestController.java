@@ -1,6 +1,6 @@
 package com.wsiiz.repairshop.servicing.application;
 
-import com.wsiiz.repairshop.servicing.domain.servicerequest.RequestType;
+import com.wsiiz.repairshop.servicing.domain.service.RequestType;
 import com.wsiiz.repairshop.servicing.domain.servicerequest.ServiceRequest;
 import com.wsiiz.repairshop.servicing.domain.servicerequest.ServiceRequestRepository;
 import java.util.List;

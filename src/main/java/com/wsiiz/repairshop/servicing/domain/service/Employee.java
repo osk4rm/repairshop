@@ -9,4 +9,9 @@ public class Employee {
 
   Long employeeId;
   String employeeName;
+
+  @Override
+  public String toString() {
+    return employeeId + ": " + employeeName;
+  }
 }

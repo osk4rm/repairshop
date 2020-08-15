@@ -3,9 +3,8 @@ package com.wsiiz.repairshop.servicing.ui.service;
 import com.vaadin.ui.*;
 import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
 import com.wsiiz.repairshop.servicing.domain.service.Service;
-import com.wsiiz.repairshop.servicing.domain.servicerequest.RequestType;
-import com.wsiiz.repairshop.servicing.domain.servicerequest.ServiceRequest;
-import com.wsiiz.repairshop.servicing.domain.servicerequest.ServiceRequestService;
+import com.wsiiz.repairshop.servicing.domain.service.ServiceService;
+import com.wsiiz.repairshop.servicing.domain.service.RequestType;
 import com.wsiiz.repairshop.vehicles.domain.Vehicle;
 import org.vaadin.viritin.form.AbstractForm;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -13,17 +12,17 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import java.util.stream.Collectors;
 
-public class ServiceRequestEditor extends AbstractForm<ServiceRequest> implements I18nAware {
+public class ServiceEditor extends AbstractForm<Service> implements I18nAware {
 
-    ServiceRequestService service;
+    ServiceService service;
 
     private ComboBox<Long> vehicleId = new ComboBox<>(i18n("vehicle"));
     private ComboBox<RequestType> requestType = new ComboBox<>(i18n("requestType"));
     private TextArea description = new TextArea(i18n("description"));
     private DateTimeField registrationTime = new DateTimeField(i18n("registrationTime"));
 
-    public ServiceRequestEditor(ServiceRequestService service) {
-      super(ServiceRequest.class);
+    public ServiceEditor(ServiceService service) {
+      super(Service.class);
       this.service = service;
     }
 

@@ -9,7 +9,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
-import com.wsiiz.repairshop.servicing.ui.service.ServiceRequestView;
+import com.wsiiz.repairshop.servicing.ui.service.ServiceView;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -21,7 +21,7 @@ public class EmployeeUI extends UI implements I18nAware {
 
     public EmployeeUI(MainViewDisplay mainContent, SpringNavigator navigator) {
         this.mainContent = mainContent;
-        navigator.setErrorView(ServiceRequestView.class);
+        navigator.setErrorView(ServiceView.class);
     }
 
     @Override

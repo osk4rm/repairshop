@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+
+import com.wsiiz.repairshop.servicing.domain.service.RequestType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

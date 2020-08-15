@@ -4,12 +4,11 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.PopupView;
 import com.vaadin.ui.renderers.LocalDateTimeRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import com.wsiiz.repairshop.foundation.ui.BaseView;
 import com.wsiiz.repairshop.foundation.ui.dialog.ConfirmDialog;
-import com.wsiiz.repairshop.servicing.domain.servicerequest.*;
+import com.wsiiz.repairshop.servicing.domain.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.grid.MGrid;
@@ -18,18 +17,19 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 @SpringComponent
 @UIScope
 @SpringView
-public class ServiceRequestView extends BaseView<ServiceRequest> {
+public class ServiceView extends BaseView<Service> {
 
   @Autowired
-  ServiceRequestService service;
+  ServiceService service;
 
-  public ServiceRequestView(ServiceRequestFactory serviceRequestFactory, ServiceRequestService service,
-                            ServiceRequestRepository serviceRepository) {
-    super(serviceRequestFactory, service, serviceRepository, new ServiceRequestEditor(service));
+
+  public ServiceView(ServiceFactory factory, ServiceService service,
+                     ServiceRepository repository) {
+    super(factory, service, repository, new ServiceEditor(service));
   }
 
   @Override
-  protected void addColumns(MGrid<ServiceRequest> table) {
+  protected void addColumns(MGrid<Service> table) {
 
     table.addColumn(entity -> service.getVehicleData(entity.getVehicleId()))
             .setCaption(i18n("vehicle"));
@@ -45,18 +45,18 @@ public class ServiceRequestView extends BaseView<ServiceRequest> {
   }
 
   @Override
-  protected MGrid<ServiceRequest> createTable() {
-    MGrid<ServiceRequest> table = new MGrid<>();
+  protected MGrid<Service> createTable() {
+    MGrid<Service> table = new MGrid<>();
 
     addColumns(table);
 
     table.addComponentColumn(entity -> new MHorizontalLayout(
-            new MButton(VaadinIcons.COG, e -> {
-              // todo later
-            }).withStyleName("no-padding").withStyleName(ValoTheme.BUTTON_BORDERLESS),
+            //new MButton(VaadinIcons.COG, e -> {},
+
             new MButton(VaadinIcons.EDIT, e -> {
               editInPopup(entity);
             }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
+
             new MButton(VaadinIcons.TRASH, e -> {
               new ConfirmDialog(i18n("deleteConfirmation"), () -> {
                 repository.delete(entity);
