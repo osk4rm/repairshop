@@ -11,8 +11,10 @@ import com.wsiiz.repairshop.foundation.ui.dialog.ConfirmDialog;
 import com.wsiiz.repairshop.servicing.domain.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.form.AbstractForm;
 import org.vaadin.viritin.grid.MGrid;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
+import sun.rmi.rmic.Main;
 
 @SpringComponent
 @UIScope
@@ -22,10 +24,17 @@ public class ServiceView extends BaseView<Service> {
   @Autowired
   ServiceService service;
 
+  AbstractForm<Service> mCard;
 
   public ServiceView(ServiceFactory factory, ServiceService service,
                      ServiceRepository repository) {
     super(factory, service, repository, new ServiceEditor(service));
+    this.mCard = new MaintenanceCard();
+  }
+
+  protected void showMCard(Service entity) {
+    mCard.setEntity(entity);
+    mCard.openInModalPopup();
   }
 
   @Override
@@ -51,7 +60,9 @@ public class ServiceView extends BaseView<Service> {
     addColumns(table);
 
     table.addComponentColumn(entity -> new MHorizontalLayout(
-            //new MButton(VaadinIcons.COG, e -> {},
+            new MButton(VaadinIcons.COG, e -> {
+              showMCard(entity);
+             }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
 
             new MButton(VaadinIcons.EDIT, e -> {
               editInPopup(entity);
@@ -71,4 +82,5 @@ public class ServiceView extends BaseView<Service> {
 
     return table;
   }
+
 }

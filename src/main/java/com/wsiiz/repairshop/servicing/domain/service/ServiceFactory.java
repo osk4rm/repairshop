@@ -10,6 +10,7 @@ public class ServiceFactory implements AbstractFactory<Service> {
   public Service create() {
     Service service = new Service();
     service.setRequiresWashing(true);
+    service.setStatus(Status.OPENED);
     return service;
   }
 
