@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ServiceService implements AbstractService<Service> {
@@ -17,6 +18,9 @@ public class ServiceService implements AbstractService<Service> {
 
   @Autowired
   VehicleRepository vehicleRepository;
+
+  @Autowired
+  TaskRepository taskRepository;
 
   @Override
   public Service save(Service entity) {
@@ -30,4 +34,10 @@ public class ServiceService implements AbstractService<Service> {
   public String getVehicleData(Long id){
     return vehicleRepository.findById(id).map(Vehicle::toString).orElse("");
   }
+
+  public List<Task> getAllTasks(){
+    return taskRepository.findAll();
+  }
+
+
 }

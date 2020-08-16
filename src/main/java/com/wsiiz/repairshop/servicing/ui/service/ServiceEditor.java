@@ -33,7 +33,6 @@ public class ServiceEditor extends AbstractForm<Service> implements I18nAware {
       this.service = service;
     }
 
-
     @Override
     protected Component createContent() {
 
@@ -56,6 +55,7 @@ public class ServiceEditor extends AbstractForm<Service> implements I18nAware {
                 getToolbar())
                 .withStyleName("with-small-frame");
     }
+
 
     @Override
     public Window openInModalPopup() {
