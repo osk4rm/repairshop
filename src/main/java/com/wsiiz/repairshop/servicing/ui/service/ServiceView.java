@@ -9,6 +9,7 @@ import com.vaadin.ui.renderers.LocalDateTimeRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import com.wsiiz.repairshop.foundation.ui.BaseView;
 import com.wsiiz.repairshop.foundation.ui.dialog.ConfirmDialog;
+import com.wsiiz.repairshop.payments.domain.invoice.Invoice;
 import com.wsiiz.repairshop.servicing.domain.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.viritin.button.MButton;
@@ -24,17 +25,17 @@ import javax.annotation.PostConstruct;
 @SpringView
 public class ServiceView extends BaseView<Service> {
 
-  @Autowired
-  ServiceService service;
+    @Autowired
+    ServiceService service;
 
 
 //  private final AbstractForm<Service> mCard;
 
-  public ServiceView(ServiceFactory factory, ServiceService service,
-                     ServiceRepository repository) {
-    super(factory, service, repository, new ServiceEditor(service));
+    public ServiceView(ServiceFactory factory, ServiceService service,
+                       ServiceRepository repository) {
+        super(factory, service, repository, new ServiceEditor(service));
 //    this.mCard = new MaintenanceCard(service);
-  }
+    }
 
 //  protected void showMCard(Service entity) {
 //
@@ -43,58 +44,66 @@ public class ServiceView extends BaseView<Service> {
 //  }
 
 
-  @Override
-  protected void addColumns(MGrid<Service> table) {
+    @Override
+    protected void addColumns(MGrid<Service> table) {
 
-    table.addColumn(entity -> service.getVehicleData(entity.getVehicleId()))
-            .setCaption(i18n("vehicle"));
+        table.addColumn(entity -> service.getVehicleData(entity.getVehicleId()))
+                .setCaption(i18n("vehicle"));
 
-    table.addColumn(entity -> i18n(RequestType.class, entity.getRequestType().name()))
-            .setCaption(i18n("requestType"));
+        table.addColumn(entity -> i18n(RequestType.class, entity.getRequestType().name()))
+                .setCaption(i18n("requestType"));
 
-    table.addColumn(entity -> entity.getDescription())
-        .setCaption(i18n("description"));
+        table.addColumn(entity -> entity.getDescription())
+                .setCaption(i18n("description"));
 
-    table.addColumn(entity -> entity.getRegistrationTime(), new LocalDateTimeRenderer())
-        .setCaption(i18n("registrationTime"));
+        table.addColumn(entity -> entity.getRegistrationTime(), new LocalDateTimeRenderer())
+                .setCaption(i18n("registrationTime"));
 
-    table.addColumn(entity -> entity.getStatus())
-            .setCaption(i18n("status"));
-  }
-
-  @Override
-  protected MGrid<Service> createTable() {
-    MGrid<Service> table = new MGrid<>();
-
-    addColumns(table);
-
-    table.addComponentColumn(entity -> new MHorizontalLayout(
-            new MButton(VaadinIcons.COG, e -> {
-              new ConfirmDialog(i18n("setAsCompletedConfirmation"), () -> {
-                entity.setStatus(Status.COMPLETED);
-                repository.save(entity);
-                loadEntities();
-              },getUI());
-
-             }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
-
-            new MButton(VaadinIcons.EDIT, e -> {
-              editInPopup(entity);
-            }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
-
-            new MButton(VaadinIcons.TRASH, e -> {
-              new ConfirmDialog(i18n("deleteConfirmation"), () -> {
-                repository.delete(entity);
-                loadEntities();
-              }, getUI());
-            }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding")))
-            .setCaption(i18n(BaseView.class, "actions"))
-            .setWidth(120);
+        table.addColumn(entity -> entity.getStatus())
+                .setCaption(i18n("status"));
 
 
-    table.setHeightFull();
-    table.setWidthFull();
+    }
 
-    return table;
-  }
+    @Override
+    protected MGrid<Service> createTable() {
+        MGrid<Service> table = new MGrid<>();
+
+        addColumns(table);
+        table.setStyleGenerator(e -> e.getStatus() == Status.COMPLETED ? "statusCompleted" : "statusOpened");
+        table.setStyleName("bold");
+        table.addComponentColumn(entity -> new MHorizontalLayout(
+
+                entity.getStatus().equals(Status.COMPLETED) ?
+                        new MButton(VaadinIcons.INVOICE, e -> {
+
+                        }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding") :
+
+                        new MButton(VaadinIcons.COG, e -> {
+                            new ConfirmDialog(i18n("setAsCompletedConfirmation"), () -> {
+                                entity.setStatus(Status.COMPLETED);
+                                repository.save(entity);
+                                loadEntities();
+                            }, getUI());
+
+                        }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
+
+                new MButton(VaadinIcons.EDIT, e -> {
+                    editInPopup(entity);
+                }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
+
+                new MButton(VaadinIcons.TRASH, e -> {
+                    new ConfirmDialog(i18n("deleteConfirmation"), () -> {
+                        repository.delete(entity);
+                        loadEntities();
+                    }, getUI());
+                }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding")))
+                .setCaption(i18n(BaseView.class, "actions"))
+                .setWidth(120);
+
+
+        table.setHeightFull();
+        table.setWidthFull();
+        return table;
+    }
 }

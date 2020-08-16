@@ -15509,3 +15509,19 @@ div.v-layout.v-horizontal.v-widget {
 .repairshop .v-button-main-menu-option-vehicle {
 	background-image: url("./img/car.png");
 }
+.repairshop .v-grid-row.statusCompleted>td
+{
+    background-color: #ff4d4d;
+}
+.repairshop .v-grid-row.statusOpened>td
+{
+    background-color: #82b396;
+}
+.repairshop .v-grid-row > td
+{
+font-weight: bold;
+}
+.repairshop .v-grid-column-header-content
+{
+font-weight: bold;
+}
