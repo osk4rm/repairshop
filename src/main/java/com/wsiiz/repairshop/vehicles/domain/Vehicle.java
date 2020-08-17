@@ -32,6 +32,6 @@ public class Vehicle extends BaseEntity {
 
     @Override
     public String toString() {
-        return id + " | " + brand + " " + model + " | " + "PLATE NO: " + plateNumbers;
+        return id + " | " + brand + " " + model + " | " + plateNumbers;
     }
 }

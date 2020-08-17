@@ -2,12 +2,9 @@ package com.wsiiz.repairshop.servicing.domain.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wsiiz.repairshop.foundation.domain.BaseEntity;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+
+import javax.persistence.*;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -28,6 +25,9 @@ public class Task extends BaseEntity {
   String description;
 
   Employee responsiblePerson;
+
+  @Enumerated(value = EnumType.STRING)
+  Status status;
 
   public Task(Service service, String description) {
     this.service = service;

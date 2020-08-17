@@ -1,52 +1,65 @@
 package com.wsiiz.repairshop.servicing.ui.service;
 
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
 import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
 import com.wsiiz.repairshop.servicing.domain.service.Service;
 import com.wsiiz.repairshop.servicing.domain.service.ServiceService;
 import com.wsiiz.repairshop.servicing.domain.service.Task;
 import org.vaadin.viritin.form.AbstractForm;
+import org.vaadin.viritin.grid.MGrid;
 import org.vaadin.viritin.label.RichText;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 
-public class MaintenanceCard extends AbstractForm<Service> implements I18nAware {
+public class MaintenanceCard implements I18nAware {
 
+    Service service;
+    ServiceService serviceService;
 
-    ServiceService service;
-
-    DateTimeField registrationTime = new DateTimeField();
-    CheckBox requiresWashing = new CheckBox();
-    TextField description = new TextField();
-
-    Grid<Task> tasks = new Grid<>();
-
-    public MaintenanceCard(ServiceService service) {
-        super(Service.class);
+    public MaintenanceCard(Service service, UI ui, ServiceService serviceService) {
         this.service = service;
+        this.serviceService = serviceService;
 
+        Window window = new Window(i18n("tasksWindow"));
+        window.setWidth("50%");
+        window.center();
+
+
+        window.setContent(new MVerticalLayout(infoText(), createTasksGrid()));
+
+
+        ui.addWindow(window);
     }
 
-    @Override
-    protected Component createContent() {
-        tasks.setItems(service.getAllTasks());
-        tasks.addColumn(e -> e.getService().getId()).setCaption("ID");
-        tasks.addColumn(e -> e.getDescription()).setCaption("DESC");
-        tasks.addColumn(e -> e.getResponsiblePerson()).setCaption("EMPLOYEE");
+    protected RichText infoText(){
 
-        return new MVerticalLayout(new RichText(getEntity().getVehicleId().toString()),
-                new MHorizontalLayout(tasks)
-        ).withStyleName("with-small-frame");
+        RichText info = new RichText();
+
+        info.setRichText(("Karta serwisowa pojazdu: ") + serviceService.getVehicleData(service.getVehicleId()));
+
+        return info;
     }
 
+    protected MGrid<Task> createTasksGrid(){
 
-    @Override
-    public Window openInModalPopup() {
-        Window w = super.openInModalPopup();
-        w.setHeight("95%");
-        w.setWidth("70%");
+        MGrid<Task> tasks = new MGrid<>();
 
-        return w;
+        tasks.setRows(service.getTasks());
+
+        tasks.addColumn(e -> e.getDescription()).setCaption(i18n("taskDescription"));
+        tasks.addColumn(e -> e.getResponsiblePerson()).setCaption(i18n("employee"));
+        tasks.addColumn(e -> e.getStatus()).setCaption(i18n("status"));
+
+        tasks.setWidthFull();
+        tasks.setStyleName("tasksTable");
+
+        return tasks;
     }
+
 }
+
+
+
+

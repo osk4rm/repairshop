@@ -1,6 +1,7 @@
 package com.wsiiz.repairshop.servicing.ui.service;
 
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.spring.annotation.UIScope;
@@ -92,12 +93,19 @@ public class ServiceView extends BaseView<Service> {
                     editInPopup(entity);
                 }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
 
+                new MButton(VaadinIcons.TASKS, e -> {
+                    new MaintenanceCard(entity, getUI(), service);
+                }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
+
                 new MButton(VaadinIcons.TRASH, e -> {
                     new ConfirmDialog(i18n("deleteConfirmation"), () -> {
                         repository.delete(entity);
                         loadEntities();
                     }, getUI());
-                }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding")))
+                }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding")
+
+
+                ))
                 .setCaption(i18n(BaseView.class, "actions"))
                 .setWidth(120);
 
