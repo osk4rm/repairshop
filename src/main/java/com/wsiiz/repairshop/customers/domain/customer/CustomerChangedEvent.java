@@ -8,6 +8,7 @@ public class CustomerChangedEvent extends ApplicationEvent {
   @Getter
   private final Customer customer;
 
+
   /**
    * Create a new {@code ApplicationEvent}.
    *
@@ -17,5 +18,7 @@ public class CustomerChangedEvent extends ApplicationEvent {
   public CustomerChangedEvent(Object source, Customer customer) {
     super(source);
     this.customer = customer;
+
+
   }
 }

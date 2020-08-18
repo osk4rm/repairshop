@@ -1,21 +1,15 @@
 package com.wsiiz.repairshop.servicing.ui.service;
 
 import com.vaadin.ui.*;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.TextArea;
-import com.vaadin.ui.Window;
 import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
+import com.wsiiz.repairshop.servicing.domain.service.RequestType;
 import com.wsiiz.repairshop.servicing.domain.service.Service;
 import com.wsiiz.repairshop.servicing.domain.service.ServiceService;
-import com.wsiiz.repairshop.servicing.domain.service.RequestType;
 import com.wsiiz.repairshop.vehicles.domain.Vehicle;
 import org.vaadin.viritin.form.AbstractForm;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
-
-import java.awt.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.stream.Collectors;
 
 public class ServiceEditor extends AbstractForm<Service> implements I18nAware {

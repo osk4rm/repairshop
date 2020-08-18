@@ -2,13 +2,12 @@ package com.wsiiz.repairshop.servicing.domain.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wsiiz.repairshop.foundation.domain.BaseEntity;
-
-import javax.persistence.*;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.persistence.*;
 
 @Entity
 @Data

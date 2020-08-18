@@ -1,13 +1,13 @@
 package com.wsiiz.repairshop.servicing.domain.service;
 
 import com.wsiiz.repairshop.foundation.domain.BaseEntity;
-import java.time.LocalDateTime;
-import java.util.List;
-import javax.persistence.*;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
