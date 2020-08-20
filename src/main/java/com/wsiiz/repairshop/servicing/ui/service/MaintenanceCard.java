@@ -84,6 +84,7 @@ public class MaintenanceCard implements I18nAware {
 
         tasks.addColumn(e -> e.getDescription()).setCaption(i18n("taskDescription"));
         tasks.addColumn(e -> e.getResponsiblePerson()).setCaption(i18n("employee"));
+        tasks.addColumn(e -> e.getPrice()).setCaption(i18n("price"));
         tasks.addColumn(e -> e.getStatus()).setCaption(i18n("status"));
         tasks.addComponentColumn(entity -> new MHorizontalLayout(
                 entity.getStatus().equals(Status.OPENED) ?

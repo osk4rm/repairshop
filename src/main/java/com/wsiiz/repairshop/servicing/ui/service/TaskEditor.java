@@ -9,6 +9,7 @@ import com.wsiiz.repairshop.servicing.domain.service.Employee;
 import com.wsiiz.repairshop.servicing.domain.service.ServiceService;
 import com.wsiiz.repairshop.servicing.domain.service.Status;
 import com.wsiiz.repairshop.servicing.domain.service.Task;
+import org.vaadin.viritin.fields.IntegerField;
 import org.vaadin.viritin.form.AbstractForm;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
@@ -18,8 +19,9 @@ import java.util.List;
 public class TaskEditor extends AbstractForm<Task> implements I18nAware {
 
     ServiceService service;
-    TextArea description = new TextArea();
-    ComboBox<Employee> responsiblePerson = new ComboBox<>();
+    TextArea description = new TextArea(i18n("description"));
+    ComboBox<Employee> responsiblePerson = new ComboBox<>(i18n("employee"));
+    IntegerField price = new IntegerField(i18n("price"));
 
     public TaskEditor(ServiceService service) {
       super(Task.class);
@@ -37,7 +39,7 @@ public class TaskEditor extends AbstractForm<Task> implements I18nAware {
         return new MVerticalLayout(
                 new MHorizontalLayout(
                         new MVerticalLayout(description),
-                        new MVerticalLayout(responsiblePerson))
+                        new MVerticalLayout(responsiblePerson, price))
                         .withFullWidth(),
                 getToolbar())
                 .withStyleName("with-small-frame");

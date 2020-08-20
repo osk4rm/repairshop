@@ -4,6 +4,7 @@ import com.wsiiz.repairshop.enterprise.domain.employee.Employee;
 import com.wsiiz.repairshop.enterprise.domain.employee.EmployeeRepository;
 import com.wsiiz.repairshop.foundation.domain.AbstractService;
 import com.wsiiz.repairshop.payments.domain.invoice.Invoice;
+import com.wsiiz.repairshop.payments.domain.invoice.InvoiceItems;
 import com.wsiiz.repairshop.payments.domain.invoice.InvoiceStatus;
 import com.wsiiz.repairshop.vehicles.domain.Vehicle;
 import com.wsiiz.repairshop.vehicles.domain.VehicleRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,9 +60,18 @@ public class ServiceService implements AbstractService<Service> {
         return employeeRepository.findById(id).map(Employee::toString).orElse("");
     }
 
-    public Invoice invoiceGenerator(Service s){
+    public Invoice invoiceGenerator(Service s) {
         Long customerId = vehicleRepository.findById(s.getVehicleId()).map(Vehicle::getOwnerId).orElse(Long.valueOf(0));
-        return new Invoice(customerId, LocalDate.now(), InvoiceStatus.PREPARED);
+        String customerAddress = "";
+        return new Invoice(customerId, customerAddress, LocalDate.now(), InvoiceStatus.PREPARED, generateInvoiceItems(s));
+    }
+
+    public List<InvoiceItems> generateInvoiceItems(Service s) {
+        List<InvoiceItems> items = new ArrayList<>();
+
+        getTasksByServiceId(s).forEach(e -> items.add(new InvoiceItems(e.getDescription(), e.getPrice())));
+
+        return items;
     }
 
 

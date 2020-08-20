@@ -1,9 +1,9 @@
 package com.wsiiz.repairshop.payments.domain.invoice;
 
 import com.wsiiz.repairshop.foundation.domain.BaseEntity;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+
+import javax.persistence.*;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -24,16 +24,20 @@ public class Invoice extends BaseEntity {
 
   String customerAddress;
 
-  LocalDate dueDate;
+  LocalDate invoiceDate;
 
   @Enumerated(value = EnumType.STRING)
   InvoiceStatus status;
 
-  Array[] items;
+  @Column
+  @ElementCollection(targetClass = InvoiceItems.class)
+  List<InvoiceItems> items;
 
-  public Invoice(Long customerId, LocalDate dueDate, InvoiceStatus status) {
+  public Invoice(Long customerId, String customerAddress, LocalDate invoiceDate, InvoiceStatus status, List<InvoiceItems> items) {
     this.customerId = customerId;
-    this.dueDate = dueDate;
+    this.customerAddress = customerAddress;
+    this.invoiceDate = invoiceDate;
     this.status = status;
+    this.items = items;
   }
 }

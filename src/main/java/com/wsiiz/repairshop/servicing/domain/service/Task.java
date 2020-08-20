@@ -25,6 +25,8 @@ public class Task extends BaseEntity {
 
   Employee responsiblePerson;
 
+  Integer price;
+
   @Enumerated(value = EnumType.STRING)
   Status status;
 

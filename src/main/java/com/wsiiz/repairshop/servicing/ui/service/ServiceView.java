@@ -54,8 +54,6 @@ public class ServiceView extends BaseView<Service> {
 
         table.addColumn(entity -> entity.getStatus())
                 .setCaption(i18n("status"));
-
-
     }
 
     @Override
@@ -69,7 +67,9 @@ public class ServiceView extends BaseView<Service> {
 
                 entity.getStatus().equals(Status.COMPLETED) ?
                         new MButton(VaadinIcons.INVOICE, e -> {
-                            invoiceRepository.save(service.invoiceGenerator(entity));
+                            new ConfirmDialog(i18n("generateInvoiceConfirmation"),() -> {
+                                invoiceRepository.save(service.invoiceGenerator(entity));
+                            }, getUI());
                             //todo button disappear
                         }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding") :
 
@@ -79,7 +79,6 @@ public class ServiceView extends BaseView<Service> {
                                 repository.save(entity);
                                 loadEntities();
                             }, getUI());
-
                         }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
 
                 new MButton(VaadinIcons.EDIT, e -> {
