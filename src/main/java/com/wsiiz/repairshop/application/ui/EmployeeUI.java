@@ -43,6 +43,7 @@ public class EmployeeUI extends UI implements I18nAware {
         m.addComponent(createNavButton(i18n("service"), "service"));
         m.addComponent(createNavButton(i18n("customer"), "customer"));
         m.addComponent(createNavButton(i18n("vehicle"), "vehicle"));
+        m.addComponent(createNavButton(i18n("invoice"), "invoice"));
         m.addComponent(buttonLogout);
         m.setComponentAlignment(buttonLogout, Alignment.BOTTOM_LEFT);
 

@@ -8,6 +8,8 @@ import com.vaadin.ui.renderers.LocalDateTimeRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import com.wsiiz.repairshop.foundation.ui.BaseView;
 import com.wsiiz.repairshop.foundation.ui.dialog.ConfirmDialog;
+import com.wsiiz.repairshop.payments.domain.invoice.Invoice;
+import com.wsiiz.repairshop.payments.domain.invoice.InvoiceRepository;
 import com.wsiiz.repairshop.servicing.domain.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.viritin.button.MButton;
@@ -25,12 +27,14 @@ public class ServiceView extends BaseView<Service> {
     @Autowired
     TaskRepository taskRepository;
 
+    @Autowired
+    InvoiceRepository invoiceRepository;
+
 
     public ServiceView(ServiceFactory factory, ServiceService service,
                        ServiceRepository repository) {
         super(factory, service, repository, new ServiceEditor(service));
     }
-
 
 
     @Override
@@ -65,7 +69,8 @@ public class ServiceView extends BaseView<Service> {
 
                 entity.getStatus().equals(Status.COMPLETED) ?
                         new MButton(VaadinIcons.INVOICE, e -> {
-
+                            invoiceRepository.save(service.invoiceGenerator(entity));
+                            //todo button disappear
                         }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding") :
 
                         new MButton(VaadinIcons.COG, e -> {
@@ -93,7 +98,7 @@ public class ServiceView extends BaseView<Service> {
                 }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding")
 
 
-                ))
+        ))
                 .setCaption(i18n(BaseView.class, "actions"))
                 .setWidth(120);
 
