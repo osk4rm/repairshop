@@ -9,6 +9,8 @@ import com.vaadin.ui.themes.ValoTheme;
 import com.wsiiz.repairshop.foundation.ui.BaseView;
 import com.wsiiz.repairshop.foundation.ui.dialog.ConfirmDialog;
 import com.wsiiz.repairshop.payments.domain.invoice.Invoice;
+import com.wsiiz.repairshop.payments.domain.invoice.InvoiceItems;
+import com.wsiiz.repairshop.payments.domain.invoice.InvoiceItemsRepository;
 import com.wsiiz.repairshop.payments.domain.invoice.InvoiceRepository;
 import com.wsiiz.repairshop.servicing.domain.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class ServiceView extends BaseView<Service> {
 
     @Autowired
     InvoiceRepository invoiceRepository;
+
+    @Autowired
+    InvoiceItemsRepository itemsRepository;
 
 
     public ServiceView(ServiceFactory factory, ServiceService service,
@@ -68,7 +73,9 @@ public class ServiceView extends BaseView<Service> {
                 entity.getStatus().equals(Status.COMPLETED) ?
                         new MButton(VaadinIcons.INVOICE, e -> {
                             new ConfirmDialog(i18n("generateInvoiceConfirmation"),() -> {
-                                invoiceRepository.save(service.invoiceGenerator(entity));
+                                Invoice invoice = service.invoiceGenerator(entity);
+                                invoiceRepository.save(invoice);
+                                itemsRepository.saveAll(service.generateInvoiceItems(entity, invoice));
                             }, getUI());
                             //todo button disappear
                         }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding") :

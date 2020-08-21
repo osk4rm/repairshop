@@ -4,6 +4,7 @@ import com.wsiiz.repairshop.foundation.domain.BaseEntity;
 
 import javax.persistence.*;
 
+import com.wsiiz.repairshop.servicing.domain.service.Task;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,15 +30,13 @@ public class Invoice extends BaseEntity {
   @Enumerated(value = EnumType.STRING)
   InvoiceStatus status;
 
-  @Column
-  @ElementCollection(targetClass = InvoiceItems.class)
+  @OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   List<InvoiceItems> items;
 
-  public Invoice(Long customerId, String customerAddress, LocalDate invoiceDate, InvoiceStatus status, List<InvoiceItems> items) {
+  public Invoice(Long customerId, String customerAddress, LocalDate invoiceDate, InvoiceStatus status) {
     this.customerId = customerId;
     this.customerAddress = customerAddress;
     this.invoiceDate = invoiceDate;
     this.status = status;
-    this.items = items;
   }
 }

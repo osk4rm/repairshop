@@ -23,10 +23,14 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 @SpringView
 public class InvoiceView extends BaseView<Invoice> {
 
-    //todo remove addNew button
-
     @Autowired
     PersonRepository customerRepo;
+
+    @Autowired
+    InvoiceRepository invoiceRepository;
+
+    @Autowired
+    InvoiceService service;
 
     public InvoiceView(InvoiceFactory factory, InvoiceService service,
                        InvoiceRepository repository) {
@@ -37,6 +41,7 @@ public class InvoiceView extends BaseView<Invoice> {
     protected void addColumns(MGrid<Invoice> table) {
 
         table.addColumn(e -> customerRepo.findById(e.getCustomerId()).map(Customer::fullName).orElse("")).setCaption(i18n("customer"));
+        table.addColumn(e -> e.getCustomerAddress()).setCaption(i18n("address"));
         table.addColumn(e -> e.getInvoiceDate()).setCaption(i18n("date"));
         table.addColumn(e -> e.getStatus()).setCaption(i18n("status"));
     }
@@ -48,13 +53,22 @@ public class InvoiceView extends BaseView<Invoice> {
         addColumns(table);
 
         table.addComponentColumn(entity -> new MHorizontalLayout(
+
+                new MButton(VaadinIcons.TASKS, e -> {
+                    new InvoiceItemsUI(entity, getUI(), service, invoiceRepository);
+                }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
+
+                new MButton(VaadinIcons.EDIT, e -> {
+                    editInPopup(entity);
+                }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
+
                 new MButton(VaadinIcons.TRASH, e -> {
                     new ConfirmDialog(i18n("deleteConfirmation"), () -> {
                         repository.delete(entity);
                         loadEntities();
                     }, getUI());
                 }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding")
-                ))
+        ))
                 .setCaption(i18n(BaseView.class, "actions"))
                 .setWidth(120);
 

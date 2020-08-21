@@ -2,43 +2,57 @@ package com.wsiiz.repairshop.payments.domain.invoice;
 
 import com.wsiiz.repairshop.customers.domain.customer.Customer;
 import com.wsiiz.repairshop.customers.domain.customer.CustomerChangedEvent;
+import com.wsiiz.repairshop.customers.domain.customer.CustomerRepository;
 import com.wsiiz.repairshop.foundation.domain.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class InvoiceService implements AbstractService<Invoice>,
-    ApplicationListener<CustomerChangedEvent> {
+        ApplicationListener<CustomerChangedEvent> {
 
-  @Autowired
-  InvoiceRepository invoiceRepository;
+    @Autowired
+    InvoiceRepository invoiceRepository;
 
-  @Override
-  public Invoice save(Invoice entity) {
-    return invoiceRepository.save(entity);
-  }
+    @Autowired
+    CustomerRepository customerRepository;
 
-  @Override
-  public void onApplicationEvent(CustomerChangedEvent event) {
+    @Override
+    public Invoice save(Invoice entity) {
+        return invoiceRepository.save(entity);
+    }
 
-    invoiceRepository.findByStatusAndCustomerId(InvoiceStatus.PREPARED, event.getCustomer().getId())
-        .ifPresent(invoice -> {
-          String newAddress = buildCustomerAddress(event.getCustomer());
-          if (!invoice.getCustomerAddress().equals(newAddress)) {
-            invoice.setCustomerAddress(newAddress);
-            invoiceRepository.save(invoice);
-          }
-        });
-  }
+    @Override
+    public void onApplicationEvent(CustomerChangedEvent event) {
 
-  private String buildCustomerAddress(Customer customer) {
+        invoiceRepository.findByStatusAndCustomerId(InvoiceStatus.PREPARED, event.getCustomer().getId())
+                .ifPresent(invoice -> {
+                    String newAddress = buildCustomerAddress(event.getCustomer());
+                    if (!invoice.getCustomerAddress().equals(newAddress)) {
+                        invoice.setCustomerAddress(newAddress);
+                        invoiceRepository.save(invoice);
+                    }
+                });
+    }
 
-    return customer.fullName()
-        + (customer.getHomeAddress() == null ? "" :
-        (customer.getHomeAddress().getStreet() + "\n"
-            + customer.getHomeAddress().getPostalCode() + " "
-            + customer.getHomeAddress().getLocality()));
-  }
+    private String buildCustomerAddress(Customer customer) {
+
+        return customer.fullName()
+                + (customer.getHomeAddress() == null ? "" :
+                (customer.getHomeAddress().getStreet() + "\n"
+                        + customer.getHomeAddress().getPostalCode() + " "
+                        + customer.getHomeAddress().getLocality()));
+    }
+
+    public List<Customer> getCustomers() {
+        return customerRepository.findAll();
+    }
+
+    public String getCustomerName(Long id) {
+        return customerRepository.findById(id).map(Customer::fullName).orElse("");
+    }
 
 }

@@ -61,15 +61,18 @@ public class ServiceService implements AbstractService<Service> {
     }
 
     public Invoice invoiceGenerator(Service s) {
+
         Long customerId = vehicleRepository.findById(s.getVehicleId()).map(Vehicle::getOwnerId).orElse(Long.valueOf(0));
-        String customerAddress = "";
-        return new Invoice(customerId, customerAddress, LocalDate.now(), InvoiceStatus.PREPARED, generateInvoiceItems(s));
+        String customerAddress = ""; //todo
+        Invoice invoice = new Invoice(customerId,customerAddress,LocalDate.now(), InvoiceStatus.PREPARED);
+
+        return invoice;
     }
 
-    public List<InvoiceItems> generateInvoiceItems(Service s) {
+    public List<InvoiceItems> generateInvoiceItems(Service s, Invoice invoice) {
         List<InvoiceItems> items = new ArrayList<>();
 
-        getTasksByServiceId(s).forEach(e -> items.add(new InvoiceItems(e.getDescription(), e.getPrice())));
+        getTasksByServiceId(s).forEach(e -> items.add(new InvoiceItems(invoice, e.getDescription(), e.getPrice())));
 
         return items;
     }
