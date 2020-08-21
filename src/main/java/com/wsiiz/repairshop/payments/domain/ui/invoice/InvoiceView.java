@@ -9,10 +9,7 @@ import com.wsiiz.repairshop.customers.domain.customer.Customer;
 import com.wsiiz.repairshop.customers.domain.customer.PersonRepository;
 import com.wsiiz.repairshop.foundation.ui.BaseView;
 import com.wsiiz.repairshop.foundation.ui.dialog.ConfirmDialog;
-import com.wsiiz.repairshop.payments.domain.invoice.Invoice;
-import com.wsiiz.repairshop.payments.domain.invoice.InvoiceFactory;
-import com.wsiiz.repairshop.payments.domain.invoice.InvoiceRepository;
-import com.wsiiz.repairshop.payments.domain.invoice.InvoiceService;
+import com.wsiiz.repairshop.payments.domain.invoice.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.viritin.button.MButton;
 import org.vaadin.viritin.grid.MGrid;
@@ -27,7 +24,7 @@ public class InvoiceView extends BaseView<Invoice> {
     PersonRepository customerRepo;
 
     @Autowired
-    InvoiceRepository invoiceRepository;
+    InvoiceItemsRepository itemsRepository;
 
     @Autowired
     InvoiceService service;
@@ -40,6 +37,7 @@ public class InvoiceView extends BaseView<Invoice> {
     @Override
     protected void addColumns(MGrid<Invoice> table) {
 
+        table.addColumn(e -> "FV " + e.getId()).setCaption(i18n("invoiceNumber"));
         table.addColumn(e -> customerRepo.findById(e.getCustomerId()).map(Customer::fullName).orElse("")).setCaption(i18n("customer"));
         table.addColumn(e -> e.getCustomerAddress()).setCaption(i18n("address"));
         table.addColumn(e -> e.getInvoiceDate()).setCaption(i18n("date"));
@@ -55,7 +53,7 @@ public class InvoiceView extends BaseView<Invoice> {
         table.addComponentColumn(entity -> new MHorizontalLayout(
 
                 new MButton(VaadinIcons.TASKS, e -> {
-                    new InvoiceItemsUI(entity, getUI(), service, invoiceRepository);
+                    new InvoiceItemsUI(entity, getUI(), service, itemsRepository);
                 }).withStyleName(ValoTheme.BUTTON_BORDERLESS).withStyleName("no-padding"),
 
                 new MButton(VaadinIcons.EDIT, e -> {

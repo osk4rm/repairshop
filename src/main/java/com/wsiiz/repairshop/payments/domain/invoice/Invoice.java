@@ -39,4 +39,6 @@ public class Invoice extends BaseEntity {
     this.invoiceDate = invoiceDate;
     this.status = status;
   }
+
+
 }

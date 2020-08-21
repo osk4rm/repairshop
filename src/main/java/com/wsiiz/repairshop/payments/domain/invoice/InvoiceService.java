@@ -4,11 +4,14 @@ import com.wsiiz.repairshop.customers.domain.customer.Customer;
 import com.wsiiz.repairshop.customers.domain.customer.CustomerChangedEvent;
 import com.wsiiz.repairshop.customers.domain.customer.CustomerRepository;
 import com.wsiiz.repairshop.foundation.domain.AbstractService;
+import com.wsiiz.repairshop.servicing.domain.service.Service;
+import com.wsiiz.repairshop.servicing.domain.service.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class InvoiceService implements AbstractService<Invoice>,
@@ -16,6 +19,9 @@ public class InvoiceService implements AbstractService<Invoice>,
 
     @Autowired
     InvoiceRepository invoiceRepository;
+
+    @Autowired
+    InvoiceItemsRepository itemsRepository;
 
     @Autowired
     CustomerRepository customerRepository;
@@ -53,6 +59,10 @@ public class InvoiceService implements AbstractService<Invoice>,
 
     public String getCustomerName(Long id) {
         return customerRepository.findById(id).map(Customer::fullName).orElse("");
+    }
+
+    public List<InvoiceItems> getInvoiceItems(Invoice s) {
+        return itemsRepository.findAll().stream().filter(f -> f.getInvoice().getId().equals(s.getId())).collect(Collectors.toList());
     }
 
 }
