@@ -7,11 +7,8 @@ import com.vaadin.ui.declarative.Design;
 import com.wsiiz.repairshop.customers.domain.customer.Person;
 import com.wsiiz.repairshop.customers.domain.customer.Sex;
 import com.wsiiz.repairshop.foundation.ui.i18n.BaseEditor;
-import com.wsiiz.repairshop.foundation.ui.i18n.I18nAware;
 import org.apache.commons.lang3.StringUtils;
-import org.vaadin.viritin.form.AbstractForm;
-import org.vaadin.viritin.layouts.MHorizontalLayout;
-import org.vaadin.viritin.layouts.MVerticalLayout;
+
 
 import java.time.LocalDate;
 
@@ -25,6 +22,7 @@ public class PersonEditor extends BaseEditor<Person> {
     private DateField birthDate;
     private TextField pesel;
     private ComboBox<Sex> sex;
+    private TextArea address;
 
     public PersonEditor() {
         super(Person.class);

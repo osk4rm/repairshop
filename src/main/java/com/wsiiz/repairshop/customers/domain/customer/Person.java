@@ -18,6 +18,7 @@ public class Person extends Customer {
     String surname;
     LocalDate birthDate;
     String pesel;
+    String address;
 
     @Enumerated(value = EnumType.STRING)
     Sex sex;

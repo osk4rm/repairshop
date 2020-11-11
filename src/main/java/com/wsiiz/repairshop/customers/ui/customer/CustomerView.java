@@ -29,6 +29,9 @@ public class CustomerView extends BaseView<Person> {
 
     table.addColumn(entity -> entity.getPesel())
         .setCaption(i18n("identity"));
+
+    table.addColumn(entity -> entity.getAddress())
+        .setCaption(i18n("address"));
   }
 
 }
