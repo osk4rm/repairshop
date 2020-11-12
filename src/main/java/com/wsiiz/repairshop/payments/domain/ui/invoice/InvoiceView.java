@@ -40,7 +40,7 @@ public class InvoiceView extends BaseView<Invoice> {
 
         table.addColumn(e -> "FV " + e.getId()).setCaption(i18n("invoiceNumber"));
         table.addColumn(e -> customerRepo.findById(e.getCustomerId()).map(Customer::fullName).orElse("")).setCaption(i18n("customer"));
-        table.addColumn(e -> customerRepo.findById(e.getCustomerId()).map(Person::getAddress).orElse("")).setCaption(i18n("address"));
+        table.addColumn(e -> e.getCustomerAddress()).setCaption(i18n("address"));
         table.addColumn(e -> e.getInvoiceDate()).setCaption(i18n("date"));
         table.addColumn(e -> e.getStatus()).setCaption(i18n("status"));
     }

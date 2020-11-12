@@ -2,6 +2,8 @@ package com.wsiiz.repairshop.servicing.domain.service;
 
 import com.wsiiz.repairshop.customers.domain.customer.Customer;
 import com.wsiiz.repairshop.customers.domain.customer.CustomerRepository;
+import com.wsiiz.repairshop.customers.domain.customer.Person;
+import com.wsiiz.repairshop.customers.domain.customer.PersonRepository;
 import com.wsiiz.repairshop.enterprise.domain.employee.Employee;
 import com.wsiiz.repairshop.enterprise.domain.employee.EmployeeRepository;
 import com.wsiiz.repairshop.foundation.domain.AbstractService;
@@ -25,7 +27,7 @@ public class ServiceService implements AbstractService<Service> {
     ServiceRepository serviceRepository;
 
     @Autowired
-    CustomerRepository customerRepository;
+    PersonRepository personRepository;
 
     @Autowired
     VehicleRepository vehicleRepository;
@@ -68,7 +70,7 @@ public class ServiceService implements AbstractService<Service> {
     public Invoice invoiceGenerator(Service s) {
 
         Long customerId = vehicleRepository.findById(s.getVehicleId()).map(Vehicle::getOwnerId).orElse(Long.valueOf(0));
-        String customerAddress = customerRepository.findById(customerId).map(Customer::getHomeAddress).toString();
+        String customerAddress = personRepository.findById(customerId).map(Person::getAddress).orElse("");
         Invoice invoice = new Invoice(customerId, customerAddress, LocalDate.now(), InvoiceStatus.PREPARED);
 
         return invoice;
