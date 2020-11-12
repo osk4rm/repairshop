@@ -31,7 +31,14 @@ public class InvoiceItemsUI implements I18nAware {
         this.repository = repository;
         this.addNewItem = addNewItem();
         this.items = createItemsGrid();
+        this.editor = new InvoiceItemsEditor(service);
         loadEntities();
+
+        editor.setSavedHandler(entity -> {
+            repository.save(entity);
+            editor.closePopup();
+            loadEntities();
+        });
 
         Window window = new Window(i18n("itemsWindow"));
         window.setWidth("50%");
@@ -56,6 +63,7 @@ public class InvoiceItemsUI implements I18nAware {
 
         addTaskButton.addClickListener(event -> {
             InvoiceItems entity = new InvoiceItems();
+            entity.setInvoice(invoice);
 
             editor.setEntity(entity);
             editor.focusFirst();
